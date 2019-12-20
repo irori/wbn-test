@@ -2,10 +2,8 @@
 
 set -e
 
-outdir=public
+outdir=../public
 site=wbn-test.web.app
-
-mkdir -p $outdir
 
 for dir in hello iframe
 do
