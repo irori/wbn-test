@@ -2,13 +2,24 @@
 
 set -e
 
+version=b1
 outdir=../public
 site=wbn-test.web.app
 
-for dir in hello iframe
+for dir in hello iframe redirect
 do
-    url=https://$site/$dir/
-    gen-bundle -version b1 -primaryURL $url -baseURL $url -dir $dir -o $outdir/$dir.wbn
+    baseurl=https://$site/$dir/
+    primaryurl=$baseurl
+
+    if [ $dir = redirect ] ; then
+        primaryurl=${baseurl}index.html
+    fi
+
+    gen-bundle -version $version \
+               -primaryURL $primaryurl \
+               -baseURL $baseurl \
+               -dir $dir \
+               -o $outdir/$dir.wbn
 done
 
 go run variants.go
